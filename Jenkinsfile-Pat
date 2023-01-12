@@ -1,0 +1,21 @@
+node{
+    def mavenHome = tool name: 'Maven3.8.7'
+    
+    stage('1. Clone Repo'){
+        git branch: 'main', url: 'https://github.com/Patioco/pet-clinic-war.git'
+    }
+    
+    stage('2. Test & Build'){
+        sh "${mavenHome}/bin/mvn package"
+    }
+    
+    stage('3. Code Quality Review'){
+        withSonarQubeEnv('Sonar-Server7.8'){
+            sh "${mavenHome}/bin/mvn sonar:sonar"
+        }    
+    }
+    
+    stage('4. Upload Artifacts'){
+        nexusArtifactUploader artifacts: [[artifactId: 'spring', classifier: '', file: 'target/spring-petclinic-2.3.1.BUILD-SNAPSHOT.war', type: 'war']], credentialsId: 'Nexus-credentials', groupId: 'org.springframework.boot', nexusUrl: '172.31.77.193:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'petclinic-snapshot', version: '2.3.1'
+    }
+}
