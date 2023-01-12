@@ -16,6 +16,6 @@ node{
     }
     
     stage('4. Upload Artifacts'){
-        nexusArtifactUploader artifacts: [[artifactId: 'spring', classifier: '', file: 'target/01-maven-web-app.war', type: 'war']], credentialsId: 'Nexus-credentials', groupId: 'org.springframework.boot', nexusUrl: '172.31.77.193:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'petclinic-snapshot', version: '2.3.1'
+        nexusArtifactUploader artifacts: [[artifactId: 'spring', classifier: '', file: 'target/01-maven-web-app.war', type: 'war']], credentialsId: 'Nexus-credentials', groupId: 'in.ashokit', nexusUrl: '172.31.77.193:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'petclinic-snapshot', version: '3.0'
     }
 }
