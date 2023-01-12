@@ -18,4 +18,8 @@ node{
     stage('4. Upload Artifacts'){
         nexusArtifactUploader artifacts: [[artifactId: 'spring', classifier: '', file: 'target/01-maven-web-app.war', type: 'war']], credentialsId: 'Nexus-credentials', groupId: 'in.ashokit', nexusUrl: '172.31.77.193:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'petclinic-snapshot', version: '3.0'
     }
+    
+    stage('5. Deploy to UAT'){
+        deploy adapters: [tomcat9(credentialsId: 'Tomcat-credential', path: '', url: 'http://172.31.89.51:8080')], contextPath: null, war: 'target/01-maven-web-app.war'
+    }
 }
